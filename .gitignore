@@ -1,0 +1,11 @@
+# Authentication and secrets
+playwright/.auth/
+.env
+.env.*
+
+# Dependencies
+node_modules/
+
+# Playwright output
+test-results/
+playwright-report/
