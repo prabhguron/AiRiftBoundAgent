@@ -1,6 +1,6 @@
 
 const response = await fetch(
-  'https://production-sfo.browserless.io/scrape?token="key',
+  'https://production-sfo.browserless.io/scrape?token=Key',
   {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -11,8 +11,47 @@ elements: [{ selector: 'a[href^="/en-US/events/"]:not([href="/en-US/events/"])' 
 );
 const data = await response.json();
 
+let objEventArr = []
+
 const events = data.data[0].results;
 for (let i = 0; i < events.length; i++) {
-    console.log("Event:", i);
-    console.log(events[i].text);
+    
+   
+    const  arr = events[i].text.split("\n")
+
+let obj = {
+    "Month": arr[0],
+    "Day": Number(arr[1]),
+    "WeekTime": arr[2],
+    "Title": arr[3],
+    "Type": arr[4],
+    "Price": Number(arr[5].split("$")[1]),
+    "Players": Number(arr[6].split("/")[0]),
+    "Capacity": Number(arr[6].split("/")[1]),
+    "Store": arr[8]?.split(" • ")[0] ?? "",
+    "Distance": arr[8]?.split(" • ")[1] ?? "",
+    "Location": arr[8]?.split(" • ")[2] ?? "",
+    "EventURL": new URL(
+        events[i].attributes.find(attr => attr.name === "href").value ,
+        "https://playriftbound.com"
+    ).href
+};
+
+objEventArr.push(obj)
+
+
+
+
+    
+
+
+
+
+
+
+
 }
+
+
+
+console.log(objEventArr)
