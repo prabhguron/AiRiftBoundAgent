@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import { promises as fs } from 'fs';
 import * as path from 'path';
 import { chromium } from 'playwright';
 
@@ -52,7 +52,7 @@ async function loginToRiftbound(): Promise<void> {
 
         console.log('Successfully authorized and loaded events dashboard!');
 
-await fs.promises.mkdir('playwright/.auth', { recursive: true });
+await fs.mkdir('playwright/.auth', { recursive: true });
 
 await context.storageState({
   path: 'playwright/.auth/user.json'
