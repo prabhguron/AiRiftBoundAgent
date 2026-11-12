@@ -1,6 +1,10 @@
 
+
+export async function Scrape() {
+    
+
 const response = await fetch(
-  'https://production-sfo.browserless.io/scrape?token=Key',
+  'https://production-sfo.browserless.io/scrape?token=2VYHYeiqX6wyIoF50e15da5742708e18c9da66afb4d231721',
   {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -19,27 +23,43 @@ for (let i = 0; i < events.length; i++) {
    
     const  arr = events[i].text.split("\n")
 
+
 let obj = {
     "Month": arr[0],
     "Day": Number(arr[1]),
     "WeekTime": arr[2],
     "Title": arr[3],
     "Type": arr[4],
-    "Price": Number(arr[5].split("$")[1]),
-    "Players": Number(arr[6].split("/")[0]),
-    "Capacity": Number(arr[6].split("/")[1]),
+
+    "Price": arr[5] === "FREE"
+        ? 0
+        : Number(arr[5].split("$")[1]),
+
+    "Players": arr[6] === "FULL"
+        ? null
+        : Number(arr[6].split("/")[0]),
+
+    "Capacity": arr[6] === "FULL"
+        ? null
+        : Number(arr[6].split("/")[1]),
+
+    "IsFull": arr[6] === "FULL",
+
     "Store": arr[8]?.split(" • ")[0] ?? "",
     "Distance": arr[8]?.split(" • ")[1] ?? "",
     "Location": arr[8]?.split(" • ")[2] ?? "",
+
     "EventURL": new URL(
-        events[i].attributes.find(attr => attr.name === "href").value ,
+        events[i].attributes.find(attr => attr.name === "href").value,
         "https://playriftbound.com"
     ).href
 };
 
 objEventArr.push(obj)
+}
+return (objEventArr)
 
-
+}
 
 
     
@@ -50,8 +70,7 @@ objEventArr.push(obj)
 
 
 
-}
 
 
 
-console.log(objEventArr)
+
