@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Riftbound event finder</title><link rel="stylesheet" href="/style.css"><script src="/app.js" type="module"></script></head>
+<body><main>
+<h1>Find a Riftbound event</h1>
+<p>Discover Nexus Nights near you.</p>
+<form id="search">
+<div class="city-picker">
+<label for="city">City</label>
+<input id="city" name="location" role="combobox" aria-autocomplete="list" aria-controls="city-options" aria-expanded="false" autocomplete="off" placeholder="Search for a city" required maxlength="100">
+<ul id="city-options" role="listbox" aria-label="Cities" hidden></ul>
+<p id="city-status" class="hint" role="status" aria-live="polite"></p>
+</div>
+<label>Your preferences<textarea name="preferences" rows="3" maxlength="2000" required placeholder="Events under $20 with the best rewards"></textarea></label>
+<button id="find" type="submit">Find events</button>
+</form>
+<p id="status" role="status" aria-live="polite"></p>
+<section id="cards" aria-label="Recommended events"></section>
+<footer><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">City data: Open-Meteo</a> / <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a></footer>
+</main></body></html>
+

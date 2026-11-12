@@ -1,13 +1,7 @@
-import express, { type Express, type Request, type Response } from "express";
+import "dotenv/config";
+import { createApp } from "./app.js";
 
-const app: Express = express();
-
-const port = 3000;
-
-app.get('/', (req: Request, res: Response) => {
-  res.send("hello world");
-});
-
-app.listen(port, () => {
-  console.log(`listening  ${port}`);
+const port = Number(process.env.PORT || 3001);
+createApp().listen(port, "127.0.0.1", () => {
+  console.log(`Riftbound event agent: http://localhost:${port}`);
 });
