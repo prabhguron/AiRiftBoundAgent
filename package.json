@@ -1,0 +1,28 @@
+{
+  "name": "airiftbound-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch backend/server.ts",
+    "start": "tsx backend/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test backend/tests/*.test.ts"
+  },
+  "dependencies": {
+    "@google/genai": "^3.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

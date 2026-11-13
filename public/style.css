@@ -1,0 +1,20 @@
+body { font: 16px/1.5 system-ui, sans-serif; margin: 0; background: #f5f6f8; color: #18202b; }
+main { max-width: 850px; margin: 40px auto; padding: 0 20px; }
+h1 { margin-bottom: 8px; } label { display: block; margin-bottom: 12px; }
+input, textarea { box-sizing: border-box; display: block; width: 100%; padding: 10px; border: 1px solid #aab1bb; border-radius: 5px; font: inherit; }
+button { padding: 10px 18px; border: 0; border-radius: 5px; background: #2453a3; color: white; font: inherit; cursor: pointer; }
+button:disabled { opacity: .6; cursor: default; } .coordinates { display: flex; gap: 16px; } .coordinates label { flex: 1; min-width: 0; }
+.hint { color: #526071; font-size: 14px; } article { background: white; border: 1px solid #d5d9df; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+article h2 { margin-top: 0; font-size: 20px; } article a { display: inline-block; margin: 0 18px 12px 0; color: #2453a3; }
+#status { min-height: 24px; } @media(max-width: 480px) { main { margin-top: 20px; } .coordinates { display: block; } }
+
+.event-description { white-space: pre-line; } details { margin-bottom: 16px; } summary { cursor: pointer; }
+.city-picker { position: relative; margin-bottom: 16px; }
+.city-picker label { margin-bottom: 4px; }
+#city-options { position: absolute; top: 70px; left: 0; right: 0; z-index: 2; margin: 0; padding: 4px; list-style: none; max-height: 250px; overflow-y: auto; background: white; border: 1px solid #aab1bb; border-radius: 5px; box-shadow: 0 4px 12px #0002; }
+#city-options[hidden] { display: none; }
+#city-options li { padding: 10px; cursor: pointer; border-radius: 3px; }
+#city-options li:hover, #city-options li[aria-selected="true"] { background: #e8effa; }
+#city-status:empty { display: none; }
+footer { margin-top: 32px; font-size: 12px; }
+footer a { color: #526071; }

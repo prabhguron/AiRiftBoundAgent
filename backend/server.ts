@@ -1,38 +1,31 @@
-import express, { type Express, type Request, type Response } from "express";
+import "dotenv/config";
+import { createApp } from "./app.js";
 import { Scrape } from "../Scrape.js";
 
-const app: Express = express();
+const port = Number(process.env.PORT || 3001);
 
-const port = 3000;
+const app = createApp();
 
+// Riftbound events API
+app.get("/api/events", async (req, res) => {
+  try {
+    const events = await Scrape();
 
-
-
-
-//then you add async before req res
-app.get('/api/events', (req: Request, res: Response) => {
-  
-
-    //could do this too const results = await Scrape
-
-
-const reuslts = Scrape().then((arr) => {
-    // `return` keyword added
     res.json({
-        message:"Riftbound Events API",
-        status:"success",
-        events: arr 
-        //events scrape
+      message: "Riftbound Events API",
+      status: "success",
+      events: events,
+    });
+  } catch (error) {
+    console.error("Error scraping events:", error);
 
-    })
-  })
- 
-
-
-
-
+    res.status(500).json({
+      message: "Failed to fetch Riftbound events",
+      status: "error",
+    });
+  }
 });
 
-app.listen(port, () => {
-  console.log(`listening  ${port}`);
+app.listen(port, "127.0.0.1", () => {
+  console.log(`Riftbound event agent: http://localhost:${port}`);
 });
