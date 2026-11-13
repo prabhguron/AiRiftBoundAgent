@@ -19,6 +19,7 @@ export interface Event {
   store: string; distance: string; location: string; url: string;
   description?: string; rewards?: string; startsAt?: string; address?: string;
   detailsStatus?: "loaded" | "unavailable"; availability?: "open" | "full" | "waitlist";
+  calendarStatus?: "free" | "conflict" | "unknown";
 }
 const scrapedSchema = z.object({ data: z.array(z.object({
   results: z.array(z.object({

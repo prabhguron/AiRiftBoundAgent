@@ -3,6 +3,9 @@ const form = document.querySelector("#search");
 const status = document.querySelector("#status");
 const cards = document.querySelector("#cards");
 const find = document.querySelector("#find");
+const calendarStatus = document.querySelector("#calendar-status");
+const calendarConnect = document.querySelector("#calendar-connect");
+const calendarDisconnect = document.querySelector("#calendar-disconnect");
 const cityPicker = createCityPicker(document.querySelector("#city"), document.querySelector("#city-options"), document.querySelector("#city-status"));
 
 // Send JSON to the backend and show useful errors.
@@ -24,6 +27,8 @@ function showCard(card, requestId) {
   text("p", (card.price === null ? "Price unknown" : "$" + card.price.toFixed(2)) +
     (card.capacity === null ? "" : " · Players: " + (card.players ?? "?") + "/" + card.capacity));
   text("p", card.reason);
+  if (card.calendarStatus === "free") text("p", "Fits your calendar.");
+  else if (card.calendarStatus === "unknown") text("p", "Couldn't check this one against your calendar.");
   text("p", card.rewards ? "Published rewards: " + card.rewards :
     card.detailsStatus === "loaded" ? "Rewards not specified in the event description." : "Reward details could not be loaded.");
   if (card.description) {
@@ -75,3 +80,33 @@ form.addEventListener("submit", async event => {
 
 
 
+
+// Show whether Google Calendar is connected, and explain the result after returning from Google.
+const calendarMessages = {
+  connected: "Google Calendar connected.",
+  denied: "Google Calendar access was not granted.",
+  "missing-scope": "Both calendar permissions are needed. Try connecting again and leave both boxes ticked.",
+  failed: "Couldn't connect Google Calendar. Please try again.",
+};
+async function refreshCalendar(note = "") {
+  try {
+    const response = await fetch("/api/calendar");
+    const result = await response.json();
+    calendarConnect.hidden = !result.configured || result.connected;
+    calendarDisconnect.hidden = !result.connected;
+    calendarStatus.textContent = note || (!result.configured
+      ? "Google Calendar isn't set up on this server."
+      : result.connected
+        ? "Google Calendar connected. Events that clash with it are skipped, and approved events are added to it."
+        : "Connect Google Calendar to skip events that clash with your plans.");
+  } catch { calendarStatus.textContent = "Couldn't load the Google Calendar status."; }
+}
+calendarDisconnect.addEventListener("click", async () => {
+  calendarDisconnect.disabled = true;
+  try { await post("/api/calendar/disconnect", {}); await refreshCalendar("Google Calendar disconnected."); }
+  catch (error) { calendarStatus.textContent = error.message; }
+  finally { calendarDisconnect.disabled = false; }
+});
+const returned = new URLSearchParams(location.search).get("calendar");
+if (returned) history.replaceState(null, "", location.pathname);
+refreshCalendar(calendarMessages[returned] ?? "");

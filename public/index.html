@@ -4,6 +4,11 @@
 <body><main>
 <h1>Find a Riftbound event</h1>
 <p>Discover Nexus Nights near you.</p>
+<section id="calendar" class="calendar" aria-label="Google Calendar">
+<p id="calendar-status">Checking Google Calendar…</p>
+<a id="calendar-connect" class="button" href="/api/calendar/connect" hidden>Connect Google Calendar</a>
+<button id="calendar-disconnect" type="button" class="secondary" hidden>Disconnect</button>
+</section>
 <form id="search">
 <div class="city-picker">
 <label for="city">City</label>

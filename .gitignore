@@ -1,10 +1,11 @@
 # Authentication and secrets
 playwright/.auth/
 .env
+.google-calendar-token.json
 
 # Dependencies
 node_modules/
 
 # Playwright output
 test-results/
-playwright-report/
+playwright-report/
